@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tela de Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <header class="topo">
+
+        <div class="logo">
+            Le&Souza Veterinaria
+        </div>
+
+    </header>
+
+    <!-- Área principal -->
+    <main class="container">
+
+        <!-- Caixa de login -->
+        <div class="login-box">
+
+            <h2>Login</h2>
+
+            <!-- Campo usuário -->
+            <input 
+                type="text"
+                id="usuario"
+                placeholder="Usuário"
+            >
+
+            <!-- Campo senha -->
+            <input 
+                type="password"
+                id="senha"
+                placeholder="Senha"
+            >
+
+            <!-- Botão -->
+            <button onclick="fazerLogin()">
+                Entrar
+            </button>
+
+            <!-- Mensagem -->
+            <p id="mensagem"></p>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
