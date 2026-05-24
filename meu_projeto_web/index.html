@@ -8,22 +8,45 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Barra superior -->
     <header class="topo">
 
+        <!-- Logo -->
         <div class="logo">
             Le&Souza Veterinaria
         </div>
 
     </header>
 
-    <!-- Área principal -->
-    <main class="container">
+    <!-- Estrutura principal do dashboard -->
+    <div class="dashboard">
 
-        <!-- Caixa de login -->
-        <div class="login-box">
+        <!-- Menu lateral -->
+        <aside class="sidebar">
+
+            <h2>Painel</h2>
+
+            <ul>
+
+                <li>Dashboard</li>
+
+                <li>Clientes</li>
+
+                <li>Animais</li>
+
+                <li>Consultas</li>
+
+                <li>Financeiro</li>
+
+            </ul>
+
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <section class="conteudo-dashboard">
 
             <h2>Login</h2>
 
@@ -49,9 +72,9 @@
             <!-- Mensagem -->
             <p id="mensagem"></p>
 
-        </div>
+        </section>
 
-    </main>
+    </div>
 
     <script src="script.js"></script>
 
