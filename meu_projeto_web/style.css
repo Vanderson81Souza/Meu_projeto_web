@@ -1,54 +1,236 @@
-/* Dashboard */
-.dashboard{
-    display: flex;
+/* =========================
+   RESET
+========================= */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Sidebar */
+/* =========================
+   BODY
+========================= */
+body{
+    font-family: Arial, sans-serif;
+
+    background-color: #0f172a;
+}
+
+/* =========================
+   TOPO
+========================= */
+.topo{
+    width: 100%;
+
+    height: 70px;
+
+    background-color: #1e293b;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    padding-right: 30px;
+
+    border-bottom: 1px solid #334155;
+}
+
+/* =========================
+   LOGO
+========================= */
+.logo{
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+.dashboard{
+    display: flex;
+
+    min-height: calc(100vh - 70px);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
 .sidebar{
     width: 250px;
 
-    height: calc(100vh - 70px);
+    min-height: calc(100vh - 70px);
 
     background-color: #111827;
 
     color: white;
 
     padding: 20px;
+
+    overflow-y: auto;
+
+    border-right: 1px solid #1f2937;
 }
 
-/* Título sidebar */
+/* =========================
+   TÍTULO SIDEBAR
+========================= */
 .sidebar h2{
     margin-bottom: 30px;
+
+    font-size: 28px;
 }
 
-/* Lista */
+/* =========================
+   LISTA MENU
+========================= */
 .sidebar ul{
     list-style: none;
 }
 
-/* Itens menu */
+/* =========================
+   ITENS MENU
+========================= */
 .sidebar li{
     padding: 15px;
 
     margin-bottom: 10px;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
     cursor: pointer;
 
     transition: 0.3s;
 }
 
-/* Hover */
+/* Hover menu */
 .sidebar li:hover{
     background-color: #1f2937;
 }
 
-/* Conteúdo principal */
+/* =========================
+   CONTEÚDO PRINCIPAL
+========================= */
 .conteudo-dashboard{
     flex: 1;
 
-    padding: 30px;
+    display: flex;
+
+    gap: 30px;
+
+    padding: 40px;
+
+    background-color: #0f172a;
+}
+
+/* =========================
+   COLUNA DOS CARDS
+========================= */
+.cards{
+    width: 300px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+/* =========================
+   CARD MENU
+========================= */
+.card{
+    background: linear-gradient(
+        135deg,
+        #1e293b,
+        #334155
+    );
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+
+    transition: all 0.3s ease;
+
+    border-left: 5px solid #3b82f6;
+}
+
+/* =========================
+   HOVER CARD
+========================= */
+.card:hover{
+    transform: translateY(-5px);
+
+    background: linear-gradient(
+        135deg,
+        #334155,
+        #475569
+    );
+}
+
+/* =========================
+   TÍTULO CARD
+========================= */
+.card h3{
+    margin-bottom: 10px;
+
+    font-size: 22px;
 
     color: white;
+}
+
+/* =========================
+   TEXTO CARD
+========================= */
+.card p{
+    color: #cbd5e1;
+
+    line-height: 1.5;
+
+    font-size: 15px;
+}
+
+/* =========================
+   ÁREA FUTURA
+========================= */
+.area-conteudo{
+    flex: 1;
+
+    background-color: #111827;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    min-height: 500px;
+
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   TÍTULO ÁREA
+========================= */
+.area-conteudo h2{
+    margin-bottom: 20px;
+
+    font-size: 30px;
+
+    color: white;
+}
+
+/* =========================
+   TEXTO ÁREA
+========================= */
+.area-conteudo p{
+    color: #cbd5e1;
+
+    font-size: 18px;
 }
