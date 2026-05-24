@@ -1,22 +1,27 @@
-/* Remove margens padrão */
+/* Reset */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Corpo da página */
+/* Corpo */
 body{
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    height: 100vh;
 }
 
 /* Barra superior */
 .topo{
     width: 100%;
     height: 70px;
-
-    background-color: #1e293b;
 
     display: flex;
 
@@ -25,6 +30,8 @@ body{
     align-items: center;
 
     padding-right: 30px;
+
+    background-color: rgba(0,0,0,0.2);
 }
 
 /* Nome da aplicação */
@@ -36,11 +43,86 @@ body{
     font-weight: bold;
 }
 
-/* Conteúdo principal */
-.conteudo{
-    padding: 40px;
+/* Container principal */
+.container{
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 }
 
-.conteudo h1{
-    margin-bottom: 10px;
+/* Caixa login */
+.login-box{
+    width: 350px;
+
+    background-color: white;
+
+    padding: 40px;
+
+    border-radius: 15px;
+
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+}
+
+/* Título */
+.login-box h2{
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    color: #1e293b;
+}
+
+/* Inputs */
+.login-box input{
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+/* Botão */
+.login-box button{
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Hover botão */
+.login-box button:hover{
+    background-color: #1d4ed8;
+}
+
+/* Mensagem */
+#mensagem{
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: red;
 }
