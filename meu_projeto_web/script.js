@@ -21,5 +21,18 @@ function fazerLogin(){
         mensagem.innerHTML = "Usuário ou senha inválidos";
 
     }
+    // Seleciona todos os cards
+    const cards = document.querySelectorAll(".card");
+
+    // Adiciona  clique aos cards como um botão
+        cards.forEach(card => {
+            card.addEventListener("click", () => {
+                const url = card.getAttribute("data-url");
+        if(url){
+            window.open(url, "_blank"); // abre em nova aba
+        }
+    });
+});
+
 
 }

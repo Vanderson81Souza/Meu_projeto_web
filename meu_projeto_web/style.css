@@ -1,109 +1,67 @@
-/* =========================
-   RESET
-========================= */
+/* =========================RESET========================= */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* =========================
-   BODY
-========================= */
+/* =========================BODY========================= */
 body{
     font-family: Arial, sans-serif;
-
     background-color: #0f172a;
 }
-
-/* =========================
-   TOPO
-========================= */
+/* =========================TOPO========================= */
 .topo{
     width: 100%;
-
     height: 70px;
-
     background-color: #1e293b;
-
     display: flex;
-
     justify-content: flex-end;
-
     align-items: center;
-
     padding-right: 30px;
-
     border-bottom: 1px solid #334155;
 }
 
-/* =========================
-   LOGO
-========================= */
+/* =========================LOGO========================= */
 .logo{
     color: white;
-
     font-size: 24px;
-
     font-weight: bold;
 }
 
-/* =========================
-   DASHBOARD
-========================= */
+/* =========================DASHBOARD========================= */
 .dashboard{
     display: flex;
-
     min-height: calc(100vh - 70px);
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* =========================SIDEBAR========================= */
 .sidebar{
-    width: 250px;
-
+    width: 350px;
     min-height: calc(100vh - 70px);
-
     background-color: #111827;
-
     color: white;
-
     padding: 20px;
-
     overflow-y: auto;
-
     border-right: 1px solid #1f2937;
 }
 
-/* =========================
-   TÍTULO SIDEBAR
-========================= */
+/* =========================TÍTULO SIDEBAR========================= */
 .sidebar h2{
     margin-bottom: 30px;
-
     font-size: 28px;
 }
-
-/* =========================
-   LISTA MENU
-========================= */
+/* =========================LISTA MENU========================= */
 .sidebar ul{
     list-style: none;
 }
 
-/* =========================
-   ITENS MENU
-========================= */
+/* =========================ITENS MENU========================= */
 .sidebar li{
     padding: 15px;
-
     margin-bottom: 10px;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
 
@@ -112,125 +70,58 @@ body{
     background-color: #1f2937;
 }
 
-/* =========================
-   CONTEÚDO PRINCIPAL
-========================= */
+/* =========================CONTEÚDO PRINCIPAL========================= */
 .conteudo-dashboard{
     flex: 1;
-
     display: flex;
-
     gap: 30px;
-
     padding: 40px;
-
     background-color: #0f172a;
 }
 
-/* =========================
-   COLUNA DOS CARDS
-========================= */
+/* =========================COLUNA DOS CARDS========================= */
 .cards{
-    width: 300px;
-
+    width: 270px;
     display: flex;
-
     flex-direction: column;
-
     gap: 20px;
 }
 
-/* =========================
-   CARD MENU
-========================= */
+/* =========================CARD MENU========================= */
 .card{
-    background: linear-gradient(
-        135deg,
-        #1e293b,
-        #334155
-    );
-
+    background: linear-gradient(135deg,#1e293b,#334155);
     padding: 20px;
-
     border-radius: 15px;
-
     cursor: pointer;
-
     box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-
     transition: all 0.3s ease;
-
     border-left: 5px solid #3b82f6;
 }
 
-/* =========================
-   HOVER CARD
-========================= */
+/* =========================HOVER CARD========================= */
 .card:hover{
     transform: translateY(-5px);
-
-    background: linear-gradient(
-        135deg,
-        #334155,
-        #475569
-    );
+    background: linear-gradient(135deg,#334155,#475569);
+    box-shadow: 0px 6px 20px rgba(50,130,246,0.6);
+    border-left: 5px solid #60a5fa;
+}
+.card:active{
+    transform: translateY(2px);
+    background: linear-gradient(135deg,#1e293b,#334155);
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.4);
+    border-left: 5px solid #2563eb;
 }
 
-/* =========================
-   TÍTULO CARD
-========================= */
+/* =========================TÍTULO CARD========================= */
 .card h3{
     margin-bottom: 10px;
-
     font-size: 22px;
-
     color: white;
 }
 
-/* =========================
-   TEXTO CARD
-========================= */
+/* =========================TEXTO CARD========================= */
 .card p{
     color: #cbd5e1;
-
     line-height: 1.5;
-
     font-size: 15px;
-}
-
-/* =========================
-   ÁREA FUTURA
-========================= */
-.area-conteudo{
-    flex: 1;
-
-    background-color: #111827;
-
-    border-radius: 20px;
-
-    padding: 30px;
-
-    min-height: 500px;
-
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
-}
-
-/* =========================
-   TÍTULO ÁREA
-========================= */
-.area-conteudo h2{
-    margin-bottom: 20px;
-
-    font-size: 30px;
-
-    color: white;
-}
-
-/* =========================
-   TEXTO ÁREA
-========================= */
-.area-conteudo p{
-    color: #cbd5e1;
-
-    font-size: 18px;
 }
