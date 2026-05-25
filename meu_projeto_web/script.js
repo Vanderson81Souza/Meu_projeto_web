@@ -34,5 +34,31 @@ function fazerLogin(){
     });
 });
 
+// nova função para abrir o card em nova aba
+document.getElementById("formAnimais").addEventListener("submit", function(event){
+    event.preventDefault();
+
+    // Captura os valores
+    const nome = document.getElementById("nome").value;
+    const especie = document.getElementById("especie").value;
+    const raca = document.getElementById("raca").value;
+    const idade = document.getElementById("idade").value;
+    const dono = document.getElementById("dono").value;
+    const contato = document.getElementById("contato").value;
+
+    // Exibe resultado simples
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = `
+        <h3>Animal cadastrado!</h3>
+        <p><strong>Nome:</strong> ${nome}</p>
+        <p><strong>Espécie:</strong> ${especie}</p>
+        <p><strong>Raça:</strong> ${raca}</p>
+        <p><strong>Idade:</strong> ${idade}</p>
+        <p><strong>Dono:</strong> ${dono}</p>
+        <p><strong>Contato:</strong> ${contato}</p>
+    `;
+});
+
+
 
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Animais</title>
+    <link rel="stylesheet" href="animais.css">
+</head>
+<body>
+    <header class="topo">
+        <h1>Cadastro de Animais</h1>
+    </header>
+
+    <main class="conteudo">
+        <form id="formAnimais">
+            <label for="nome">Nome do Animal:</label>
+            <input type="text" id="nome" required>
+
+            <label for="especie">Espécie:</label>
+            <input type="text" id="especie" required>
+
+            <label for="raca">Raça:</label>
+            <input type="text" id="raca">
+
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade">
+
+            <label for="dono">Nome do Dono:</label>
+            <input type="text" id="dono" required>
+            
+            <label for="contato">Contato do Dono:</label>
+            <input type="text" id="contato" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <div id="resultado"></div>
+    </main>
+
+    <script src="animais.js"></script>
+</body>
+</html>
