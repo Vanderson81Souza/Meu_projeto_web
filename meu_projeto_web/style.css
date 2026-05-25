@@ -1,17 +1,20 @@
 /* =========================RESET========================= */
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* =========================BODY========================= */
-body{
+body {
     font-family: Arial, sans-serif;
     background-color: #0f172a;
+    color: white;
+    margin: 0;
 }
+
 /* =========================TOPO========================= */
-.topo{
+.topo {
     width: 100%;
     height: 70px;
     background-color: #1e293b;
@@ -20,23 +23,24 @@ body{
     align-items: center;
     padding-right: 30px;
     border-bottom: 1px solid #334155;
+    text-align: center; /* usado também no cadastro */
 }
 
 /* =========================LOGO========================= */
-.logo{
+.logo {
     color: white;
     font-size: 24px;
     font-weight: bold;
 }
 
 /* =========================DASHBOARD========================= */
-.dashboard{
+.dashboard {
     display: flex;
     min-height: calc(100vh - 70px);
 }
 
 /* =========================SIDEBAR========================= */
-.sidebar{
+.sidebar {
     width: 350px;
     min-height: calc(100vh - 70px);
     background-color: #111827;
@@ -47,17 +51,18 @@ body{
 }
 
 /* =========================TÍTULO SIDEBAR========================= */
-.sidebar h2{
+.sidebar h2 {
     margin-bottom: 30px;
     font-size: 28px;
 }
+
 /* =========================LISTA MENU========================= */
-.sidebar ul{
+.sidebar ul {
     list-style: none;
 }
 
 /* =========================ITENS MENU========================= */
-.sidebar li{
+.sidebar li {
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -66,12 +71,12 @@ body{
 }
 
 /* Hover menu */
-.sidebar li:hover{
+.sidebar li:hover {
     background-color: #1f2937;
 }
 
 /* =========================CONTEÚDO PRINCIPAL========================= */
-.conteudo-dashboard{
+.conteudo-dashboard {
     flex: 1;
     display: flex;
     gap: 30px;
@@ -80,7 +85,7 @@ body{
 }
 
 /* =========================COLUNA DOS CARDS========================= */
-.cards{
+.cards {
     width: 270px;
     display: flex;
     flex-direction: column;
@@ -88,8 +93,8 @@ body{
 }
 
 /* =========================CARD MENU========================= */
-.card{
-    background: linear-gradient(135deg,#1e293b,#334155);
+.card {
+    background: linear-gradient(135deg, #1e293b, #334155);
     padding: 20px;
     border-radius: 15px;
     cursor: pointer;
@@ -99,31 +104,61 @@ body{
 }
 
 /* =========================HOVER CARD========================= */
-.card:hover{
+.card:hover {
     transform: translateY(-5px);
-    background: linear-gradient(135deg,#334155,#475569);
+    background: linear-gradient(135deg, #334155, #475569);
     box-shadow: 0px 6px 20px rgba(50,130,246,0.6);
     border-left: 5px solid #60a5fa;
 }
-.card:active{
+
+.card:active {
     transform: translateY(2px);
-    background: linear-gradient(135deg,#1e293b,#334155);
+    background: linear-gradient(135deg, #1e293b, #334155);
     box-shadow: 0px 2px 8px rgba(0,0,0,0.4);
     border-left: 5px solid #2563eb;
 }
 
 /* =========================TÍTULO CARD========================= */
-.card h3{
+.card h3 {
     margin-bottom: 10px;
     font-size: 22px;
     color: white;
 }
 
 /* =========================TEXTO CARD========================= */
-.card p{
+.card p {
     color: #cbd5e1;
     line-height: 1.5;
     font-size: 15px;
 }
 
+/* =========================CONTEÚDO CADASTRO DE ANIMAIS========================= */
+.conteudo {
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
+}
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 160%;
+}
+
+button {
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
