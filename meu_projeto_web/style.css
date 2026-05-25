@@ -149,7 +149,7 @@ input, button {
     padding: 10px;
     border-radius: 8px;
     border: none;
-    width: 160%;
+    width: 100%;
 }
 
 button {
@@ -161,4 +161,22 @@ button {
 
 button:hover {
     background-color: #2563eb;
+}
+.cadastro-container {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+}
+
+.form-area {
+    flex: 2; /* ocupa mais espaço */
+}
+
+.resultado-area {
+    flex: 1; /* ocupa a lateral direita */
+    background-color: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+    overflow-y: auto;
 }

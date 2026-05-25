@@ -27,23 +27,26 @@ function configurarCards() {
                     conteudo.innerHTML = "<h2>Controle de Clientes</h2><p>Aqui você gerencia os clientes.</p>";
                     break;
                 case "animais":
-                    conteudo.innerHTML = `
-                        <form id="formAnimais">
-                            <label>Nome do Animal:</label>
-                            <input type="text" id="nome" required>
-                            <label>Espécie:</label>
-                            <input type="text" id="especie" required>
-                            <label>Raça:</label>
-                            <input type="text" id="raca">
-                            <label>Idade:</label>
-                            <input type="number" id="idade">
-                            <label>Dono:</label>
-                            <input type="text" id="dono" required>
-                            <label>Contato do Dono:</label>
-                            <input type="text" id="contatoDono">
-                            <button type="submit">Cadastrar</button>
-                        </form>
-                        <div id="resultado"></div>
+                    conteudo.innerHTML = `<div class="cadastro-container">
+        <div class="form-area">
+            <form id="formAnimais">
+                <label>Nome do Animal:</label>
+                <input type="text" id="nome" required>
+                <label>Espécie:</label>
+                <input type="text" id="especie" required>
+                <label>Raça:</label>
+                <input type="text" id="raca">
+                <label>Idade:</label>
+                <input type="number" id="idade">
+                <label>Dono:</label>
+                <input type="text" id="dono" required>
+                <label>Contato do Dono:</label>
+                <input type="text" id="contatoDono">
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+        <div class="resultado-area" id="resultado"></div>
+    </div>
                     `;
 
                     // Ativa o formulário
