@@ -1,162 +1,758 @@
-// Função de login
+// ========================= LOGIN =========================
 function fazerLogin() {
-    let usuario = document.getElementById("usuario").value;
-    let senha = document.getElementById("senha").value;
-    let mensagem = document.getElementById("mensagem");
+
+    let usuario =
+        document.getElementById("usuario").value;
+
+    let senha =
+        document.getElementById("senha").value;
+
+    let mensagem =
+        document.getElementById("mensagem");
 
     if (usuario === "lele" && senha === "1981") {
+
         mensagem.style.color = "green";
-        mensagem.innerHTML = "Login realizado com sucesso!";
+
+        mensagem.innerHTML =
+            "Login realizado com sucesso!";
+
     } else {
+
         mensagem.style.color = "red";
-        mensagem.innerHTML = "Usuário ou senha inválidos";
+
+        mensagem.innerHTML =
+            "Usuário ou senha inválidos";
     }
 }
 
-// Função de navegação dos cards
-function configurarCards() {
-    const cards = document.querySelectorAll(".card");
-    const conteudo = document.getElementById("conteudo");
+// ========================= STORAGE ANIMAIS =========================
+function obterAnimais() {
 
-    cards.forEach(card => {
-        card.addEventListener("click", () => {
-            const section = card.getAttribute("data-section");
+    return JSON.parse(
+        localStorage.getItem("animaisVeterinaria")
+    ) || [];
+}
 
-            switch (section) {
-                case "clientes":
+function salvarAnimal(animal) {
+
+    const animais = obterAnimais();
+
+    animais.push(animal);
+
+    localStorage.setItem(
+        "animaisVeterinaria",
+        JSON.stringify(animais)
+    );
+}
+
+// ========================= STORAGE SERVIÇOS =========================
+function obterServicos() {
+
+    return JSON.parse(
+        localStorage.getItem("servicosVeterinaria")
+    ) || [];
+}
+
+function salvarServico(servico) {
+
+    const servicos = obterServicos();
+
+    servicos.push(servico);
+
+    localStorage.setItem(
+        "servicosVeterinaria",
+        JSON.stringify(servicos)
+    );
+}
+
+// ========================= HISTÓRICO =========================
+function carregarHistorico() {
+
+    const conteudo =
+        document.getElementById("conteudo");
+
     conteudo.innerHTML = `
-        <div class="cadastro-container">
-            <div class="form-area">
-                <form id="formServicos">
-                    <label>Nome do Animal:</label>
-                    <input type="text" id="animalServico" required>
 
-                    <label>Serviço:</label>
-                    <select id="tipoServico" required>
-                        <option value="">Selecione...</option>
-                        <option>Consulta</option>
-                        <option>Vacina</option>
-                        <option>Emergência</option>
-                        <option>Internação</option>
-                        <option>Exames</option>
-                    </select>
+        <div class="historico-container">
 
-                    <label>Data:</label>
-                    <input type="date" id="dataServico" required>
+            <div class="filtros-historico">
 
-                    <label>Valor:</label>
-                    <input type="number" id="valorServico" required>
-
+                <div>
                     <label>Veterinário:</label>
-                    <select id="vetServico" required>
+
+                    <select id="filtroVet">
+
+                        <option value="">
+                            Todos
+                        </option>
+
                         <option>Dr. Silva</option>
                         <option>Dra. Costa</option>
                         <option>Dr. Almeida</option>
                         <option>Dra. Santos</option>
                         <option>Dr. Oliveira</option>
-                    </select>
 
-                    <button type="submit">Registrar Serviço</button>
-                </form>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Mês:</label>
+
+                    <input
+                        type="month"
+                        id="filtroMes"
+                    >
+                </div>
+
+                <button id="btnFiltrar">
+                    Filtrar
+                </button>
+
             </div>
-            <div class="resultado-area" id="resultadoServicos"></div>
+
+            <br>
+
+            <div id="resultadoHistorico"></div>
+
         </div>
     `;
 
-    document.getElementById("formServicos").addEventListener("submit", function(event){
-        event.preventDefault();
-        const animal = document.getElementById("animalServico").value;
-        const servico = document.getElementById("tipoServico").value;
-        const data = document.getElementById("dataServico").value;
-        const valor = document.getElementById("valorServico").value;
-        const vet = document.getElementById("vetServico").value;
+    function renderizarHistorico() {
 
-        // Mostra resultado na aba
-        document.getElementById("resultadoServicos").innerHTML += `
-            <h3>Serviço registrado!</h3>
-            <p><strong>Animal:</strong> ${animal}</p>
-            <p><strong>Serviço:</strong> ${servico}</p>
-            <p><strong>Data:</strong> ${data}</p>
-            <p><strong>Valor:</strong> R$ ${valor}</p>
-            <p><strong>Veterinário:</strong> ${vet}</p>
-            <hr>
-        `;
+        let servicos = obterServicos();
 
-        // INTEGRAÇÃO COM FINANCEIRO
-        const financeiro = document.getElementById("conteudo");
-        if(document.getElementById("tabelaFinanceiro") === null){
-            financeiro.innerHTML += `
-                <h2>Controle Financeiro</h2>
-                <table class="tabela-financeiro" id="tabelaFinanceiro">
-                    <tr><th>Data</th><th>Serviço</th><th>Animal</th><th>Valor</th></tr>
-                </table>
-            `;
+        const filtroVet =
+            document.getElementById("filtroVet").value;
+
+        const filtroMes =
+            document.getElementById("filtroMes").value;
+
+        if (filtroVet !== "") {
+
+            servicos = servicos.filter(
+                s => s.vet === filtroVet
+            );
         }
-        document.getElementById("tabelaFinanceiro").innerHTML += `
-            <tr>
-                <td>${data}</td>
-                <td>${servico}</td>
-                <td>${animal}</td>
-                <td>R$ ${valor}</td>
-            </tr>
-        `;
-    });
-    break;
 
-                case "animais":
-                    conteudo.innerHTML = `<div class="cadastro-container">
-        <div class="form-area">
-            <form id="formAnimais">
-                <label>Nome do Animal:</label>
-                <input type="text" id="nome" required>
-                <label>Espécie:</label>
-                <input type="text" id="especie" required>
-                <label>Raça:</label>
-                <input type="text" id="raca">
-                <label>Idade:</label>
-                <input type="number" id="idade">
-                <label>Dono:</label>
-                <input type="text" id="dono" required>
-                <label>Contato do Dono:</label>
-                <input type="text" id="contatoDono">
-                <button type="submit">Cadastrar</button>
-            </form>
-        </div>
-        <div class="resultado-area" id="resultado"></div>
-    </div>
+        if (filtroMes !== "") {
+
+            servicos = servicos.filter(
+                s => s.data.startsWith(filtroMes)
+            );
+        }
+
+        const resultado =
+            document.getElementById(
+                "resultadoHistorico"
+            );
+
+        if (servicos.length === 0) {
+
+            resultado.innerHTML =
+                "<p>Nenhum registro encontrado.</p>";
+
+            return;
+        }
+
+        let html = "";
+
+        servicos.forEach(servico => {
+
+            html += `
+
+                <div class="resultado-area">
+
+                    <h3>
+                        ${servico.tipo}
+                    </h3>
+
+                    <br>
+
+                    <p>
+                        <strong>Data:</strong>
+                        ${servico.data}
+                    </p>
+
+                    <p>
+                        <strong>Veterinário:</strong>
+                        ${servico.vet}
+                    </p>
+
+                    <p>
+                        <strong>Valor:</strong>
+                        R$ ${servico.valor}
+                    </p>
+
+                    <hr>
+
+                    <h4>
+                        Dados do Animal
+                    </h4>
+
+                    <p>
+                        <strong>Nome:</strong>
+                        ${servico.animal.nome}
+                    </p>
+
+                    <p>
+                        <strong>Espécie:</strong>
+                        ${servico.animal.especie}
+                    </p>
+
+                    <p>
+                        <strong>Raça:</strong>
+                        ${servico.animal.raca}
+                    </p>
+
+                    <p>
+                        <strong>Idade:</strong>
+                        ${servico.animal.idade}
+                    </p>
+
+                    <p>
+                        <strong>Dono:</strong>
+                        ${servico.animal.dono}
+                    </p>
+
+                    <p>
+                        <strong>Contato:</strong>
+                        ${servico.animal.contatoDono}
+                    </p>
+
+                </div>
+
+                <br>
+            `;
+        });
+
+        resultado.innerHTML = html;
+    }
+
+    renderizarHistorico();
+
+    document
+        .getElementById("btnFiltrar")
+        .addEventListener(
+            "click",
+            renderizarHistorico
+        );
+}
+
+// ========================= NAVEGAÇÃO =========================
+function configurarCards() {
+
+    const cards =
+        document.querySelectorAll(".card");
+
+    const conteudo =
+        document.getElementById("conteudo");
+
+    cards.forEach(card => {
+
+        card.addEventListener("click", () => {
+
+            const section =
+                card.getAttribute("data-section");
+
+            switch (section) {
+
+                // ========================= SERVIÇOS =========================
+                case "clientes":
+
+                    const animais = obterAnimais();
+
+                    conteudo.innerHTML = `
+
+                        <div class="cadastro-container">
+
+                            <div class="form-area">
+
+                                <form id="formServicos">
+
+                                    <label>
+                                        Nome do Animal:
+                                    </label>
+
+                                    <select
+                                        id="animalServico"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Selecione...
+                                        </option>
+
+                                        ${animais.map(animal => `
+                                            <option value="${animal.nome}">
+                                                ${animal.nome}
+                                            </option>
+                                        `).join("")}
+
+                                    </select>
+
+                                    <label>Serviço:</label>
+
+                                    <select
+                                        id="tipoServico"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Selecione...
+                                        </option>
+
+                                        <option>
+                                            Consulta
+                                        </option>
+
+                                        <option>
+                                            Vacina
+                                        </option>
+
+                                        <option>
+                                            Emergência
+                                        </option>
+
+                                        <option>
+                                            Internação
+                                        </option>
+
+                                        <option>
+                                            Exames
+                                        </option>
+
+                                    </select>
+
+                                    <label>Data:</label>
+
+                                    <input
+                                        type="date"
+                                        id="dataServico"
+                                        required
+                                    >
+
+                                    <label>Valor:</label>
+
+                                    <input
+                                        type="number"
+                                        id="valorServico"
+                                        required
+                                    >
+
+                                    <label>
+                                        Veterinário:
+                                    </label>
+
+                                    <select
+                                        id="vetServico"
+                                        required
+                                    >
+
+                                        <option>
+                                            Dr. Silva
+                                        </option>
+
+                                        <option>
+                                            Dra. Costa
+                                        </option>
+
+                                        <option>
+                                            Dr. Almeida
+                                        </option>
+
+                                        <option>
+                                            Dra. Santos
+                                        </option>
+
+                                        <option>
+                                            Dr. Oliveira
+                                        </option>
+
+                                    </select>
+
+                                    <button type="submit">
+                                        Registrar Serviço
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            <div
+                                class="resultado-area"
+                                id="resultadoServicos"
+                            ></div>
+
+                        </div>
                     `;
 
-                    // Ativa o formulário
-                    document.getElementById("formAnimais").addEventListener("submit", function(event){
-                        event.preventDefault();
-                        const nome = document.getElementById("nome").value;
-                        const especie = document.getElementById("especie").value;
-                        const raca = document.getElementById("raca").value;
-                        const idade = document.getElementById("idade").value;
-                        const dono = document.getElementById("dono").value;
-                        const contatoDono = document.getElementById("contatoDono").value;
+                    document
+                        .getElementById("formServicos")
+                        .addEventListener(
+                            "submit",
+                            function(event){
 
-                        document.getElementById("resultado").innerHTML = `
-                            <h3>Animal cadastrado!</h3>
-                            <p><strong>Nome:</strong> ${nome}</p>
-                            <p><strong>Espécie:</strong> ${especie}</p>
-                            <p><strong>Raça:</strong> ${raca}</p>
-                            <p><strong>Idade:</strong> ${idade}</p>
-                            <p><strong>Dono:</strong> ${dono}</p>
-                            <p><strong>Contato do Dono:</strong> ${contatoDono}</p>
-                        `;
-                    });
+                                event.preventDefault();
+
+                                const nomeAnimal =
+                                    document.getElementById(
+                                        "animalServico"
+                                    ).value;
+
+                                const tipo =
+                                    document.getElementById(
+                                        "tipoServico"
+                                    ).value;
+
+                                const data =
+                                    document.getElementById(
+                                        "dataServico"
+                                    ).value;
+
+                                const valor =
+                                    document.getElementById(
+                                        "valorServico"
+                                    ).value;
+
+                                const vet =
+                                    document.getElementById(
+                                        "vetServico"
+                                    ).value;
+
+                                const animalSelecionado =
+                                    animais.find(
+                                        animal =>
+                                        animal.nome === nomeAnimal
+                                    );
+
+                                const novoServico = {
+
+                                    animal:
+                                        animalSelecionado,
+
+                                    tipo,
+                                    data,
+                                    valor,
+                                    vet
+                                };
+
+                                salvarServico(
+                                    novoServico
+                                );
+
+                                document.getElementById(
+                                    "resultadoServicos"
+                                ).innerHTML = `
+
+                                    <h3>
+                                        Serviço registrado!
+                                    </h3>
+
+                                    <br>
+
+                                    <p>
+                                        <strong>Animal:</strong>
+                                        ${animalSelecionado.nome}
+                                    </p>
+
+                                    <p>
+                                        <strong>Serviço:</strong>
+                                        ${tipo}
+                                    </p>
+
+                                    <p>
+                                        <strong>Data:</strong>
+                                        ${data}
+                                    </p>
+
+                                    <p>
+                                        <strong>Valor:</strong>
+                                        R$ ${valor}
+                                    </p>
+
+                                    <p>
+                                        <strong>Veterinário:</strong>
+                                        ${vet}
+                                    </p>
+                                `;
+
+                                document
+                                    .getElementById(
+                                        "formServicos"
+                                    )
+                                    .reset();
+
+                            }
+                        );
+
                     break;
+
+                // ========================= ANIMAIS =========================
+                case "animais":
+
+                    conteudo.innerHTML = `
+
+                        <div class="cadastro-container">
+
+                            <div class="form-area">
+
+                                <form id="formAnimais">
+
+                                    <label>
+                                        Nome do Animal:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="nome"
+                                        required
+                                    >
+
+                                    <label>
+                                        Espécie:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="especie"
+                                        required
+                                    >
+
+                                    <label>
+                                        Raça:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="raca"
+                                    >
+
+                                    <label>
+                                        Idade:
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="idade"
+                                    >
+
+                                    <label>
+                                        Dono:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="dono"
+                                        required
+                                    >
+
+                                    <label>
+                                        Contato do Dono:
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="contatoDono"
+                                    >
+
+                                    <button type="submit">
+                                        Cadastrar
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            <div
+                                class="resultado-area"
+                                id="resultado"
+                            ></div>
+
+                        </div>
+                    `;
+
+                    document
+                        .getElementById("formAnimais")
+                        .addEventListener(
+                            "submit",
+                            function(event){
+
+                                event.preventDefault();
+
+                                const animal = {
+
+                                    nome:
+                                        document.getElementById(
+                                            "nome"
+                                        ).value,
+
+                                    especie:
+                                        document.getElementById(
+                                            "especie"
+                                        ).value,
+
+                                    raca:
+                                        document.getElementById(
+                                            "raca"
+                                        ).value,
+
+                                    idade:
+                                        document.getElementById(
+                                            "idade"
+                                        ).value,
+
+                                    dono:
+                                        document.getElementById(
+                                            "dono"
+                                        ).value,
+
+                                    contatoDono:
+                                        document.getElementById(
+                                            "contatoDono"
+                                        ).value
+                                };
+
+                                salvarAnimal(animal);
+
+                                document.getElementById(
+                                    "resultado"
+                                ).innerHTML = `
+
+                                    <h3>
+                                        Animal cadastrado!
+                                    </h3>
+
+                                    <br>
+
+                                    <p>
+                                        <strong>Nome:</strong>
+                                        ${animal.nome}
+                                    </p>
+
+                                    <p>
+                                        <strong>Espécie:</strong>
+                                        ${animal.especie}
+                                    </p>
+
+                                    <p>
+                                        <strong>Raça:</strong>
+                                        ${animal.raca}
+                                    </p>
+
+                                    <p>
+                                        <strong>Idade:</strong>
+                                        ${animal.idade}
+                                    </p>
+
+                                    <p>
+                                        <strong>Dono:</strong>
+                                        ${animal.dono}
+                                    </p>
+
+                                    <p>
+                                        <strong>Contato:</strong>
+                                        ${animal.contatoDono}
+                                    </p>
+                                `;
+
+                                document
+                                    .getElementById(
+                                        "formAnimais"
+                                    )
+                                    .reset();
+                            }
+                        );
+
+                    break;
+
+                // ========================= HISTÓRICO =========================
                 case "historico":
-                    conteudo.innerHTML = "<h2>Histórico</h2><p>Aqui você consulta o histórico dos atendimentos.</p>";
+
+                    carregarHistorico();
+
                     break;
+
+                // ========================= FINANCEIRO =========================
                 case "financeiro":
-                    conteudo.innerHTML = "<h2>Controle Financeiro</h2><p>Aqui você acompanha as finanças.</p>";
+
+                    const servicos =
+                        obterServicos();
+
+                    let total = 0;
+
+                    servicos.forEach(servico => {
+
+                        total += Number(
+                            servico.valor
+                        );
+                    });
+
+                    conteudo.innerHTML = `
+
+                        <div>
+
+                            <h2>
+                                Controle Financeiro
+                            </h2>
+
+                            <br>
+
+                            <h3>
+                                Total faturado:
+                                R$ ${total.toFixed(2)}
+                            </h3>
+
+                            <br>
+
+                            <table
+                                class="tabela-financeiro"
+                            >
+
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Serviço</th>
+                                    <th>Animal</th>
+                                    <th>Valor</th>
+                                </tr>
+
+                                ${servicos.map(servico => `
+
+                                    <tr>
+
+                                        <td>
+                                            ${servico.data}
+                                        </td>
+
+                                        <td>
+                                            ${servico.tipo}
+                                        </td>
+
+                                        <td>
+                                            ${servico.animal.nome}
+                                        </td>
+
+                                        <td>
+                                            R$ ${servico.valor}
+                                        </td>
+
+                                    </tr>
+
+                                `).join("")}
+
+                            </table>
+
+                        </div>
+                    `;
+
                     break;
             }
         });
     });
 }
 
-// Chama configuração dos cards ao carregar a página
-document.addEventListener("DOMContentLoaded", configurarCards);
+// ========================= INICIALIZAÇÃO =========================
+document.addEventListener(
+    "DOMContentLoaded",
+    configurarCards
+);
