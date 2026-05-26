@@ -72,11 +72,31 @@ function carregarHistorico() {
     const conteudo =
         document.getElementById("conteudo");
 
+    const animais = obterAnimais();
+
     conteudo.innerHTML = `
 
         <div class="historico-container">
 
             <div class="filtros-historico">
+
+                <div>
+                    <label>Animal:</label>
+
+                    <select id="filtroAnimal">
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        ${animais.map(animal => `
+                            <option value="${animal.nome}">
+                                ${animal.nome}
+                            </option>
+                        `).join("")}
+
+                    </select>
+                </div>
 
                 <div>
                     <label>Veterinário:</label>
@@ -113,7 +133,7 @@ function carregarHistorico() {
 
             <br>
 
-            <div id="resultadoHistorico"></div>
+            <div id="resultadoHistorico" class="resultado-historico"></div>
 
         </div>
     `;
@@ -122,21 +142,28 @@ function carregarHistorico() {
 
         let servicos = obterServicos();
 
+        const filtroAnimal =
+            document.getElementById("filtroAnimal").value;
+
         const filtroVet =
             document.getElementById("filtroVet").value;
 
         const filtroMes =
             document.getElementById("filtroMes").value;
 
-        if (filtroVet !== "") {
+        if (filtroAnimal !== "") {
+            servicos = servicos.filter(
+                s => s.animal && s.animal.nome === filtroAnimal
+            );
+        }
 
+        if (filtroVet !== "") {
             servicos = servicos.filter(
                 s => s.vet === filtroVet
             );
         }
 
         if (filtroMes !== "") {
-
             servicos = servicos.filter(
                 s => s.data.startsWith(filtroMes)
             );
@@ -148,10 +175,8 @@ function carregarHistorico() {
             );
 
         if (servicos.length === 0) {
-
             resultado.innerHTML =
                 "<p>Nenhum registro encontrado.</p>";
-
             return;
         }
 
@@ -159,18 +184,19 @@ function carregarHistorico() {
 
         servicos.forEach(servico => {
 
+            const valorFormatado =
+                Number(servico.valor || 0).toFixed(2);
+
             html += `
 
                 <div class="resultado-area">
 
                     <h3>
-                        ${servico.tipo}
+                        ${servico.tipo} - ${servico.animal?.nome || "Animal"}
                     </h3>
 
-                    <br>
-
                     <p>
-                        <strong>Data:</strong>
+                        <strong>Data do Serviço:</strong>
                         ${servico.data}
                     </p>
 
@@ -181,43 +207,48 @@ function carregarHistorico() {
 
                     <p>
                         <strong>Valor:</strong>
-                        R$ ${servico.valor}
+                        R$ ${valorFormatado}
+                    </p>
+
+                    <p>
+                        <strong>Tipo de serviço:</strong>
+                        ${servico.tipo}
                     </p>
 
                     <hr>
 
                     <h4>
-                        Dados do Animal
+                        Dados completos do Animal
                     </h4>
 
                     <p>
                         <strong>Nome:</strong>
-                        ${servico.animal.nome}
+                        ${servico.animal?.nome || "-"}
                     </p>
 
                     <p>
                         <strong>Espécie:</strong>
-                        ${servico.animal.especie}
+                        ${servico.animal?.especie || "-"}
                     </p>
 
                     <p>
                         <strong>Raça:</strong>
-                        ${servico.animal.raca}
+                        ${servico.animal?.raca || "-"}
                     </p>
 
                     <p>
                         <strong>Idade:</strong>
-                        ${servico.animal.idade}
+                        ${servico.animal?.idade || "-"}
                     </p>
 
                     <p>
                         <strong>Dono:</strong>
-                        ${servico.animal.dono}
+                        ${servico.animal?.dono || "-"}
                     </p>
 
                     <p>
-                        <strong>Contato:</strong>
-                        ${servico.animal.contatoDono}
+                        <strong>Contato do dono:</strong>
+                        ${servico.animal?.contatoDono || "-"}
                     </p>
 
                 </div>
@@ -229,7 +260,16 @@ function carregarHistorico() {
         resultado.innerHTML = html;
     }
 
-    renderizarHistorico();
+    const resultado =
+        document.getElementById(
+            "resultadoHistorico"
+        );
+
+    resultado.innerHTML = `
+        <div class="historico-instrucao">
+            <p>Selecione os filtros e clique em <strong>Filtrar</strong> para ver o histórico.</p>
+        </div>
+    `;
 
     document
         .getElementById("btnFiltrar")

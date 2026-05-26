@@ -181,6 +181,88 @@ button:hover {
     overflow-y: auto;
 }
 
+.historico-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.filtros-historico {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.35);
+    border: 1px solid #334155;
+}
+
+.filtros-historico > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filtros-historico label {
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.filtros-historico select,
+.filtros-historico input {
+    background-color: #0f172a;
+    color: white;
+    border: 1px solid #334155;
+    padding: 12px 14px;
+    border-radius: 12px;
+}
+
+.filtros-historico button {
+    width: auto;
+    min-width: 160px;
+    padding: 12px 24px;
+    border-radius: 12px;
+}
+
+.resultado-historico {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resultado-area {
+    width: 100%;
+    background-color: #1e293b;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.35);
+}
+
+.resultado-area h3,
+.resultado-area h4,
+.resultado-area p {
+    margin-bottom: 12px;
+}
+
+.resultado-area p strong {
+    display: inline-block;
+    min-width: 140px;
+}
+
+.historico-instrucao {
+    background-color: #111827;
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px dashed #334155;
+    color: #cbd5e1;
+    font-size: 16px;
+}
+
 /* =========================tabela financeira========================= */
 .tabela-financeiro {
     width: 100%;
