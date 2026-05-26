@@ -24,8 +24,85 @@ function configurarCards() {
 
             switch (section) {
                 case "clientes":
-                    conteudo.innerHTML = "<h2>Controle de Clientes</h2><p>Aqui você gerencia os clientes.</p>";
-                    break;
+    conteudo.innerHTML = `
+        <div class="cadastro-container">
+            <div class="form-area">
+                <form id="formServicos">
+                    <label>Nome do Animal:</label>
+                    <input type="text" id="animalServico" required>
+
+                    <label>Serviço:</label>
+                    <select id="tipoServico" required>
+                        <option value="">Selecione...</option>
+                        <option>Consulta</option>
+                        <option>Vacina</option>
+                        <option>Emergência</option>
+                        <option>Internação</option>
+                        <option>Exames</option>
+                    </select>
+
+                    <label>Data:</label>
+                    <input type="date" id="dataServico" required>
+
+                    <label>Valor:</label>
+                    <input type="number" id="valorServico" required>
+
+                    <label>Veterinário:</label>
+                    <select id="vetServico" required>
+                        <option>Dr. Silva</option>
+                        <option>Dra. Costa</option>
+                        <option>Dr. Almeida</option>
+                        <option>Dra. Santos</option>
+                        <option>Dr. Oliveira</option>
+                    </select>
+
+                    <button type="submit">Registrar Serviço</button>
+                </form>
+            </div>
+            <div class="resultado-area" id="resultadoServicos"></div>
+        </div>
+    `;
+
+    document.getElementById("formServicos").addEventListener("submit", function(event){
+        event.preventDefault();
+        const animal = document.getElementById("animalServico").value;
+        const servico = document.getElementById("tipoServico").value;
+        const data = document.getElementById("dataServico").value;
+        const valor = document.getElementById("valorServico").value;
+        const vet = document.getElementById("vetServico").value;
+
+        // Mostra resultado na aba
+        document.getElementById("resultadoServicos").innerHTML += `
+            <h3>Serviço registrado!</h3>
+            <p><strong>Animal:</strong> ${animal}</p>
+            <p><strong>Serviço:</strong> ${servico}</p>
+            <p><strong>Data:</strong> ${data}</p>
+            <p><strong>Valor:</strong> R$ ${valor}</p>
+            <p><strong>Veterinário:</strong> ${vet}</p>
+            <hr>
+        `;
+
+        // INTEGRAÇÃO COM FINANCEIRO
+        const financeiro = document.getElementById("conteudo");
+        if(document.getElementById("tabelaFinanceiro") === null){
+            financeiro.innerHTML += `
+                <h2>Controle Financeiro</h2>
+                <table class="tabela-financeiro" id="tabelaFinanceiro">
+                    <tr><th>Data</th><th>Serviço</th><th>Animal</th><th>Valor</th></tr>
+                </table>
+            `;
+        }
+        document.getElementById("tabelaFinanceiro").innerHTML += `
+            <tr>
+                <td>${data}</td>
+                <td>${servico}</td>
+                <td>${animal}</td>
+                <td>R$ ${valor}</td>
+            </tr>
+        `;
+    });
+    break;
+
                 case "animais":
                     conteudo.innerHTML = `<div class="cadastro-container">
         <div class="form-area">
