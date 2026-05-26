@@ -38,6 +38,19 @@ async function salvarAnimal(animal) {
     });
 }
 
+async function atualizarAnimal(animalId, animal) {
+    return fetchJson(`/animals/${animalId}`, {
+        method: "PUT",
+        body: JSON.stringify(animal),
+    });
+}
+
+async function deletarAnimal(animalId) {
+    return fetchJson(`/animals/${animalId}`, {
+        method: "DELETE",
+    });
+}
+
 // ========================= API SERVIÇOS =========================
 async function obterServicos(query = "") {
     const path = query ? `/services${query}` : "/services";
@@ -264,9 +277,13 @@ function configurarCards() {
                 }
 
                 case "animais": {
+                    let animais = [];
+                    let animalEmEdicao = null;
+
                     conteudo.innerHTML = `
-                        <div class="cadastro-container">
-                            <div class="form-area">
+                        <div class="cadastro-container animal-management">
+                            <div class="form-area animal-form">
+                                <div id="animalMessage" class="animal-message"></div>
                                 <form id="formAnimais">
                                     <label>Nome do Animal:</label>
                                     <input type="text" id="nome" required>
@@ -286,14 +303,147 @@ function configurarCards() {
                                     <label>Contato do Dono:</label>
                                     <input type="text" id="contatoDono">
 
-                                    <button type="submit">Cadastrar</button>
+                                    <div class="form-buttons">
+                                        <button type="submit" id="btnSalvarAnimal">Cadastrar</button>
+                                        <button type="button" id="btnCancelarEdicao" class="secondary-button" style="display:none;">Cancelar edição</button>
+                                    </div>
                                 </form>
                             </div>
-                            <div class="resultado-area" id="resultado"></div>
+
+                            <div class="animal-list-container">
+                                <div class="resultado-area">
+                                    <h3>Buscar animal</h3>
+                                    <div class="animal-search">
+                                        <input type="text" id="animalSearch" placeholder="Digite nome ou dono" />
+                                        <button type="button" id="btnBuscarAnimal" class="secondary-button">Buscar</button>
+                                    </div>
+                                    <div id="animalList" class="animal-list"></div>
+                                </div>
+                            </div>
                         </div>
                     `;
 
-                    document.getElementById("formAnimais").addEventListener("submit", async event => {
+                    const formAnimais = document.getElementById("formAnimais");
+                    const animalList = document.getElementById("animalList");
+                    const animalMessage = document.getElementById("animalMessage");
+                    const btnSalvarAnimal = document.getElementById("btnSalvarAnimal");
+                    const btnCancelarEdicao = document.getElementById("btnCancelarEdicao");
+                    const animalSearch = document.getElementById("animalSearch");
+                    const btnBuscarAnimal = document.getElementById("btnBuscarAnimal");
+
+                    function resetAnimalForm() {
+                        animalEmEdicao = null;
+                        formAnimais.reset();
+                        btnSalvarAnimal.textContent = "Cadastrar";
+                        btnCancelarEdicao.style.display = "none";
+                        animalMessage.innerHTML = "";
+                    }
+
+                    function preencherAnimalForm(animal) {
+                        animalEmEdicao = animal;
+                        document.getElementById("nome").value = animal.nome || "";
+                        document.getElementById("especie").value = animal.especie || "";
+                        document.getElementById("raca").value = animal.raca || "";
+                        document.getElementById("idade").value = animal.idade || "";
+                        document.getElementById("dono").value = animal.dono || "";
+                        document.getElementById("contatoDono").value = animal.contatoDono || "";
+                        btnSalvarAnimal.textContent = "Atualizar";
+                        btnCancelarEdicao.style.display = "inline-block";
+                        animalMessage.innerHTML = `<p>Modo de edição: ${animal.nome}</p>`;
+                    }
+
+                    function renderAnimalList(items) {
+                        if (!items.length) {
+                            animalList.innerHTML = "<p>Digite um nome ou dono para buscar um animal.</p>";
+                            return;
+                        }
+
+                        animalList.innerHTML = items.map(item => `
+                            <div class="animal-item">
+                                <div class="animal-item-info">
+                                    <p class="animal-title">${item.nome || "-"} <span>(${item.especie || "-"})</span></p>
+                                    <p><strong>Raça:</strong> ${item.raca || "-"} • <strong>Idade:</strong> ${item.idade || "-"}</p>
+                                    <p><strong>Dono:</strong> ${item.dono || "-"}</p>
+                                    <p><strong>Contato:</strong> ${item.contatoDono || "-"}</p>
+                                </div>
+                                <div class="animal-actions">
+                                    <button type="button" class="btn-edit" data-id="${item.id}">Editar</button>
+                                    <button type="button" class="btn-delete" data-id="${item.id}">Excluir</button>
+                                </div>
+                            </div>
+                        `).join("");
+
+                        animalList.querySelectorAll(".btn-edit").forEach(button => {
+                            button.addEventListener("click", () => {
+                                const id = Number(button.dataset.id);
+                                const animal = animais.find(a => a.id === id);
+                                if (animal) {
+                                    preencherAnimalForm(animal);
+                                }
+                            });
+                        });
+
+                        animalList.querySelectorAll(".btn-delete").forEach(button => {
+                            button.addEventListener("click", async () => {
+                                const id = Number(button.dataset.id);
+                                const animal = animais.find(a => a.id === id);
+                                if (!animal) {
+                                    return;
+                                }
+
+                                const confirmacao = confirm(`Excluir ${animal.nome}? Essa ação não pode ser desfeita.`);
+                                if (!confirmacao) {
+                                    return;
+                                }
+
+                                try {
+                                    await deletarAnimal(id);
+                                    await carregarLista();
+                                    if (animalEmEdicao && animalEmEdicao.id === id) {
+                                        resetAnimalForm();
+                                    }
+                                } catch (error) {
+                                    exibirMensagemErro("animalMessage", `Erro ao excluir animal: ${error.message}`);
+                                }
+                            });
+                        });
+                    }
+
+                    function filtrarAnimais() {
+                        const termo = animalSearch.value.trim().toLowerCase();
+                        if (!termo) {
+                            animalList.innerHTML = "<p>Digite um nome ou dono para buscar um animal.</p>";
+                            return;
+                        }
+
+                        const resultados = animais.filter(animal => {
+                            return (
+                                animal.nome?.toLowerCase().includes(termo) ||
+                                animal.dono?.toLowerCase().includes(termo)
+                            );
+                        });
+
+                        renderAnimalList(resultados);
+                    }
+
+                    async function carregarLista() {
+                        try {
+                            animais = await obterAnimais();
+                            animalList.innerHTML = "<p>Digite um nome ou dono para buscar um animal.</p>";
+                        } catch (error) {
+                            animalList.innerHTML = `<p>Erro ao carregar animais: ${error.message}</p>`;
+                        }
+                    }
+
+                    btnCancelarEdicao.addEventListener("click", resetAnimalForm);
+                    btnBuscarAnimal.addEventListener("click", filtrarAnimais);
+                    animalSearch.addEventListener("input", () => {
+                        if (!animalSearch.value.trim()) {
+                            animalList.innerHTML = "<p>Digite um nome ou dono para buscar um animal.</p>";
+                        }
+                    });
+
+                    formAnimais.addEventListener("submit", async event => {
                         event.preventDefault();
 
                         const animal = {
@@ -306,23 +456,23 @@ function configurarCards() {
                         };
 
                         try {
-                            const savedAnimal = await salvarAnimal(animal);
-                            document.getElementById("resultado").innerHTML = `
-                                <h3>Animal cadastrado!</h3>
-                                <br>
-                                <p><strong>Nome:</strong> ${savedAnimal.nome}</p>
-                                <p><strong>Espécie:</strong> ${savedAnimal.especie}</p>
-                                <p><strong>Raça:</strong> ${savedAnimal.raca}</p>
-                                <p><strong>Idade:</strong> ${savedAnimal.idade}</p>
-                                <p><strong>Dono:</strong> ${savedAnimal.dono}</p>
-                                <p><strong>Contato:</strong> ${savedAnimal.contatoDono}</p>
-                            `;
-                        } catch (error) {
-                            exibirMensagemErro("resultado", `Erro ao cadastrar animal: ${error.message}`);
-                        }
+                            let savedAnimal;
+                            if (animalEmEdicao) {
+                                savedAnimal = await atualizarAnimal(animalEmEdicao.id, animal);
+                                animalMessage.innerHTML = `<p>Animal atualizado: ${savedAnimal.nome}</p>`;
+                            } else {
+                                savedAnimal = await salvarAnimal(animal);
+                                animalMessage.innerHTML = `<p>Animal cadastrado: ${savedAnimal.nome}</p>`;
+                            }
 
-                        document.getElementById("formAnimais").reset();
+                            await carregarLista();
+                            resetAnimalForm();
+                        } catch (error) {
+                            exibirMensagemErro("animalMessage", `Erro ao salvar animal: ${error.message}`);
+                        }
                     });
+
+                    await carregarLista();
                     break;
                 }
 

@@ -168,6 +168,149 @@ button:hover {
     width: 100%;
 }
 
+.animal-management {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 28px;
+    width: 100%;
+    align-items: start;
+}
+
+.animal-form {
+    background-color: #111827;
+    padding: 28px 28px 18px;
+    border-radius: 20px;
+    border: 1px solid #334155;
+    box-shadow: 0px 6px 22px rgba(0, 0, 0, 0.28);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.animal-form label {
+    margin-top: 6px;
+}
+
+.animal-form input {
+    margin-top: 4px;
+}
+
+.animal-message {
+    margin-bottom: 18px;
+    color: #fbbf24;
+    font-size: 15px;
+    min-height: 22px;
+}
+
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.secondary-button {
+    background-color: #475569;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 10px;
+}
+
+.secondary-button:hover {
+    background-color: #64748b;
+}
+
+.animal-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0 10px;
+    align-items: center;
+}
+
+.animal-search input {
+    flex: 1;
+    background-color: #0f172a;
+    color: white;
+    border: 1px solid #334155;
+    padding: 12px 14px;
+    border-radius: 12px;
+}
+
+.animal-search button {
+    min-width: 120px;
+}
+
+.animal-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.animal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.animal-item {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+}
+
+.animal-item-info p {
+    margin-bottom: 8px;
+    color: #e2e8f0;
+}
+
+.animal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.animal-title span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #94a3b8;
+}
+
+.animal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.animal-actions button {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.animal-actions .btn-edit {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.animal-actions .btn-delete {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
 .form-area {
     flex: 2;
 }
