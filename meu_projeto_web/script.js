@@ -146,18 +146,24 @@ async function carregarHistorico() {
                 return `
                     <div class="resultado-area">
                         <h3>${servico.tipo} - ${animal.nome || "Animal"}</h3>
-                        <p><strong>Data do Serviço:</strong> ${servico.data}</p>
-                        <p><strong>Veterinário:</strong> ${servico.vet}</p>
-                        <p><strong>Valor:</strong> R$ ${valorFormatado}</p>
-                        <p><strong>Tipo de serviço:</strong> ${servico.tipo}</p>
-                        <hr>
+                        
+                        <div class="info-row">
+                            <p><strong>Data do Serviço:</strong> ${servico.data}</p>
+                            <p><strong>Veterinário:</strong> ${servico.vet}</p>
+                            <p><strong>Valor:</strong> R$ ${valorFormatado}</p>
+                        </div>
+
                         <h4>Dados completos do Animal</h4>
-                        <p><strong>Nome:</strong> ${animal.nome || "-"}</p>
-                        <p><strong>Espécie:</strong> ${animal.especie || "-"}</p>
-                        <p><strong>Raça:</strong> ${animal.raca || "-"}</p>
-                        <p><strong>Idade:</strong> ${animal.idade || "-"}</p>
-                        <p><strong>Dono:</strong> ${animal.dono || "-"}</p>
-                        <p><strong>Contato do dono:</strong> ${animal.contatoDono || "-"}</p>
+                        <div class="info-row">
+                            <p><strong>Nome:</strong> ${animal.nome || "-"}</p>
+                            <p><strong>Espécie:</strong> ${animal.especie || "-"}</p>
+                            <p><strong>Raça:</strong> ${animal.raca || "-"}</p>
+                        </div>
+                        <div class="info-row">
+                            <p><strong>Idade:</strong> ${animal.idade || "-"}</p>
+                            <p><strong>Dono:</strong> ${animal.dono || "-"}</p>
+                            <p><strong>Contato:</strong> ${animal.contatoDono || "-"}</p>
+                        </div>
                     </div>
                 `;
             }).join("");
