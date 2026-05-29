@@ -1,9 +1,20 @@
 import sqlite3
 from flask import Flask, jsonify, request, g, abort
 from pathlib import Path
+import sys
 
-DB_PATH = Path(__file__).resolve().parent / "vet_clinic.db"
-app = Flask(__name__, static_folder='.', static_url_path='')
+# Diretórios ajustados para compatibilidade com empacotamento (PyInstaller)
+if getattr(sys, "frozen", False):
+    # Quando empacotado com PyInstaller, recursos adicionados ficam em _MEIPASS
+    BUNDLE_DIR = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+    # Local onde o executável ficará — bom lugar para armazenar o DB persistente
+    EXE_DIR = Path(sys.executable).resolve().parent
+else:
+    BUNDLE_DIR = Path(__file__).resolve().parent
+    EXE_DIR = BUNDLE_DIR
+
+DB_PATH = EXE_DIR / "vet_clinic.db"
+app = Flask(__name__, static_folder=str(BUNDLE_DIR), static_url_path='')
 
 
 def get_db():
